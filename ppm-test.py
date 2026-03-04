@@ -8,14 +8,14 @@ testImg.AppendPixel(0, 0, 255)
 testImg.AppendPixel(255, 255, 0)
 testImg.AppendPixel(255, 255, 255)
 testImg.AppendPixel(0, 0, 0)
-testImg.WriteFile("test.ppm")
-ConvertImage("test.ppm", "test.png")
+testImg.WriteFile("tests/test.ppm")
+ConvertImage("tests/test.ppm", "tests/test.png")
 
 
 width, height = 255, 255
 uvImg = PpmImage(width, height)
 for x in range(width):
     for y in range(height):
-        uvImg.AppendPixel((x,y,0))
-uvImg.WriteFile("uv-test.ppm")
-ConvertImage("uv-test.ppm", "uv-test.png")
+        uvImg.AppendPixel(x,y,0)
+uvImg.WriteFile("tests/uv-test.ppm")
+ConvertImage("tests/uv-test.ppm", "tests/uv-test.png")
