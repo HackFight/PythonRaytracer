@@ -53,6 +53,9 @@ class ray:
     def __init__(self, origin, direction):
         self.origin = origin
         self.direction = direction
+    
+    def at(self, t):
+        return self.origin + self.direction * t
 
 def HitSphere(r, center, radius):
     oc = center - r.origin
@@ -60,7 +63,10 @@ def HitSphere(r, center, radius):
     b = -2.0 * r.direction.dot(oc)
     c = oc.dot(oc) - radius**2
     discriminant = b**2 - 4*a*c
-    return discriminant >= 0
+    if discriminant < 0:
+        return -1.0
+    else:
+        return (-b - math.sqrt(discriminant)) / (2.0 * a)
 
 if __name__ == "__main__":
     v = vec3(1, 1, 1)
