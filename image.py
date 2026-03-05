@@ -6,10 +6,10 @@ class PpmImage:
         self.width = width
         self.height = height
         self.pointer = 0
-        self.data = f"P3\n{width} {height}\n255\n"
+        self.data = [f"P3\n{width} {height}\n255\n"]
     
     def AppendRaw(self, data):
-        self.data += data
+        self.data.append(data)
     
     def AppendPixel(self, r, g, b):
         if self.pointer >= self.width * self.height:
@@ -28,16 +28,18 @@ class PpmImage:
         self.pointer += 1
     
     def WriteFile(self, path):
-        try:
-            with open(path, "xt") as file:
-                file.write(self.data)
-                file.close()
-        except FileExistsError:
-            answer = input("File already exists, overwrite? [Y/n]: ")
-            if answer.lower() != "n":
-                os.remove(path)
-                self.WriteFile(path)
+        with open(path, "xt") as file:
+            file.writelines(self.data)
+            file.close()
 
-def ConvertImage(pathIn, pathOut):
+def ConvertImage(pathIn, pathOut, delete = False):
     with Image.open(pathIn) as img:
         img.save(pathOut)
+    if delete:
+        os.remove(pathIn)
+
+if __name__ == "__main__":
+    img = PpmImage(1, 1)
+    img.AppendPixel(255, 255, 255)
+    img.WriteFile("hi.ppm")
+    ConvertImage("hi.ppm", "hi.png", True)

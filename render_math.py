@@ -11,23 +11,23 @@ class vec3:
     
     # Unary operators
     def __neg__(self):
-        return -self.x, -self.y, -self.z
+        return vec3(-self.x, -self.y, -self.z)
     
     #Binary operators
     def __add__(self, other):
-        return self.x + other.x, self.y + other.y, self.z + other.z
+        return vec3(self.x + other.x, self.y + other.y, self.z + other.z)
     
     def __sub__(self, other):
-        return self.x - other.x, self.y - other.y, self.z - other.z
+        return vec3(self.x - other.x, self.y - other.y, self.z - other.z)
     
     def __mul__(self, other):
-        return self.x * other, self.y * other, self.z * other
+        return vec3(self.x * other, self.y * other, self.z * other)
     
     def __truediv__(self, other):
-        return self.x / other, self.y / other, self.z / other
+        return vec3(self.x / other, self.y / other, self.z / other)
     
     def __pow__(self, other):
-        return self.x ** other, self.y ** other, self.z ** other
+        return vec3(self.x ** other, self.y ** other, self.z ** other)
     
     #Comparison operators
     def __eq__(self, other):
@@ -44,7 +44,23 @@ class vec3:
         return self.x * other.x + self.y * other.y + self.z * other.z
     
     def cross(self, other):
-        return self.x * other.z - self.z * other.y, self.z * other.x - self.x * other.z, self.x * other.y - self.y * other.x
+        return vec3(self.x * other.z - self.z * other.y, self.z * other.x - self.x * other.z, self.x * other.y - self.y * other.x)
+    
+    def normalise(self):
+        return self / self.magnitude()
+
+class ray:
+    def __init__(self, origin, direction):
+        self.origin = origin
+        self.direction = direction
+
+def HitSphere(r, center, radius):
+    oc = center - r.origin
+    a = r.direction.dot(r.direction)
+    b = -2.0 * r.direction.dot(oc)
+    c = oc.dot(oc) - radius**2
+    discriminant = b**2 - 4*a*c
+    return discriminant >= 0
 
 if __name__ == "__main__":
     v = vec3(1, 1, 1)

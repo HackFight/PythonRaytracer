@@ -1,4 +1,8 @@
+import os
 from image import PpmImage, ConvertImage
+
+if not os.path.exists("tests"):
+    os.mkdir("tests")
 
 width, height = 3, 2
 testImg = PpmImage(width, height)
@@ -9,7 +13,7 @@ testImg.AppendPixel(255, 255, 0)
 testImg.AppendPixel(255, 255, 255)
 testImg.AppendPixel(0, 0, 0)
 testImg.WriteFile("tests/test.ppm")
-ConvertImage("tests/test.ppm", "tests/test.png")
+ConvertImage("tests/test.ppm", "tests/test.png", True)
 
 
 width, height = 255, 255
@@ -18,4 +22,4 @@ for x in range(width):
     for y in range(height):
         uvImg.AppendPixel(x,y,0)
 uvImg.WriteFile("tests/uv-test.ppm")
-ConvertImage("tests/uv-test.ppm", "tests/uv-test.png")
+ConvertImage("tests/uv-test.ppm", "tests/uv-test.png", True)
